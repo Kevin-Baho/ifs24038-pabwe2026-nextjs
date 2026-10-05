@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Dokumen/KULIAH/Semester%205/PABWE/Tugas/Praktikum/ifs24038-pabwe2026-nextjs/src/app/auth/layout.tsx"],"sourcesContent":["export default function Layout({ children }: { children: React.ReactNode }) {\n  return <>{children}</>;\n}"],"names":["Layout","children"],"mappings":";;;;;;AAAe,SAASA,OAAO,EAAEC,QAAQ,EAAiC;IACxE,qBAAO;kBAAGA;;;;;;AACZ"}}]
+}
