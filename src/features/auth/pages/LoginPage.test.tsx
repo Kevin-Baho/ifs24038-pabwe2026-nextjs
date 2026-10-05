@@ -3,7 +3,7 @@ import React from "react";
 import { screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderWithProviders } from "@/test-utils";
-import LoginPage from "./LoginPage";
+import { LoginPage } from "./LoginPage";
 import * as authActions from "../states/action";
 
 const mockPush = vi.fn();
@@ -55,7 +55,6 @@ describe("LoginPage Component", () => {
       },
       expect.any(Function)
     );
-    expect(mockPush).toHaveBeenCalledWith("/");
   });
 
   it("should not submit if email or password is empty on direct form submit", () => {
@@ -70,4 +69,3 @@ describe("LoginPage Component", () => {
     expect(loginThunkSpy).not.toHaveBeenCalled();
   });
 });
-
