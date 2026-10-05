@@ -107,10 +107,10 @@ export function ProfilePage() {
 
           <label
             htmlFor="profile-photo-input"
-            className="absolute bottom-0 right-0 p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-md cursor-pointer transition transform hover:scale-105"
+            className="absolute bottom-0 right-0 p-2 bg-blue-700 hover:bg-blue-800 text-white rounded-full shadow-md cursor-pointer transition transform hover:scale-105"
             title="Ganti Foto Profil"
-            aria-label="Unggah foto profil"
           >
+            <span className="sr-only">Unggah foto profil</span>
             {isUpdatingPhoto ? (
               <IconLoader2 size={16} className="animate-spin" />
             ) : (
@@ -130,20 +130,20 @@ export function ProfilePage() {
 
         <div className="text-center sm:text-left flex-1">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-            <h2 className="text-xl font-bold text-slate-800">{displayName}</h2>
-            <span className="inline-block px-2.5 py-0.5 text-xs font-semibold bg-blue-50 text-blue-700 rounded-full border border-blue-200">
+            <h2 className="text-xl font-bold text-slate-900">{displayName}</h2>
+            <span className="inline-block px-2.5 py-0.5 text-xs font-bold bg-blue-50 text-blue-800 rounded-full border border-blue-200">
               ifs24038
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-slate-500">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-slate-700 font-medium">
             <div className="flex items-center gap-1.5">
-              <IconMail size={16} className="text-slate-400" />
+              <IconMail size={16} className="text-slate-600" />
               <span>{displayEmail}</span>
             </div>
             {profile?.created_at && (
               <div className="flex items-center gap-1.5">
-                <IconCalendar size={16} className="text-slate-400" />
+                <IconCalendar size={16} className="text-slate-600" />
                 <span>Bergabung {formatDate(profile.created_at)}</span>
               </div>
             )}
@@ -154,15 +154,15 @@ export function ProfilePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
-            <IconUser size={20} className="text-blue-600" />
-            <h3 className="font-bold text-slate-800">Perbarui Informasi</h3>
+            <IconUser size={20} className="text-blue-700" />
+            <h3 className="font-bold text-slate-900">Perbarui Informasi</h3>
           </div>
 
           <form onSubmit={handleUpdateName} className="space-y-4">
             <div>
               <label
                 htmlFor="profile-name"
-                className="block text-sm font-semibold text-slate-700 mb-1"
+                className="block text-sm font-bold text-slate-800 mb-1"
               >
                 Nama Lengkap
               </label>
@@ -173,14 +173,14 @@ export function ProfilePage() {
                 value={name}
                 onChange={handleNameChange}
                 placeholder="Nama Lengkap"
-                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition"
+                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 transition"
               />
             </div>
 
             <div>
               <label
                 htmlFor="profile-email-readonly"
-                className="block text-sm font-semibold text-slate-700 mb-1"
+                className="block text-sm font-bold text-slate-800 mb-1"
               >
                 Email (Tidak dapat diubah)
               </label>
@@ -189,14 +189,14 @@ export function ProfilePage() {
                 type="email"
                 readOnly
                 value={displayEmail}
-                className="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 text-sm outline-none cursor-not-allowed"
+                className="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-700 font-medium text-sm outline-none cursor-not-allowed"
               />
             </div>
 
             <button
               type="submit"
               disabled={isUpdatingProfile || !name.trim()}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-medium text-sm rounded-xl transition shadow-xs"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-700 hover:bg-blue-800 disabled:bg-blue-300 text-white font-bold text-sm rounded-xl transition shadow-xs cursor-pointer"
             >
               {isUpdatingProfile ? (
                 <>
@@ -215,15 +215,15 @@ export function ProfilePage() {
 
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
-            <IconShieldLock size={20} className="text-blue-600" />
-            <h3 className="font-bold text-slate-800">Keamanan & Sandi</h3>
+            <IconShieldLock size={20} className="text-blue-700" />
+            <h3 className="font-bold text-slate-900">Keamanan & Sandi</h3>
           </div>
 
           <form onSubmit={handleUpdatePassword} className="space-y-4">
             <div>
               <label
                 htmlFor="old-password"
-                className="block text-sm font-semibold text-slate-700 mb-1"
+                className="block text-sm font-bold text-slate-800 mb-1"
               >
                 Kata Sandi Saat Ini
               </label>
@@ -234,14 +234,14 @@ export function ProfilePage() {
                 value={oldPassword}
                 onChange={handleOldPasswordChange}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition"
+                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 transition"
               />
             </div>
 
             <div>
               <label
                 htmlFor="new-password"
-                className="block text-sm font-semibold text-slate-700 mb-1"
+                className="block text-sm font-bold text-slate-800 mb-1"
               >
                 Kata Sandi Baru
               </label>
@@ -252,14 +252,14 @@ export function ProfilePage() {
                 value={newPassword}
                 onChange={handleNewPasswordChange}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition"
+                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 transition"
               />
             </div>
 
             <div>
               <label
                 htmlFor="confirm-password"
-                className="block text-sm font-semibold text-slate-700 mb-1"
+                className="block text-sm font-bold text-slate-800 mb-1"
               >
                 Konfirmasi Kata Sandi Baru
               </label>
@@ -270,7 +270,7 @@ export function ProfilePage() {
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition"
+                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 transition"
               />
             </div>
 
@@ -282,7 +282,7 @@ export function ProfilePage() {
                 !newPassword ||
                 !confirmPassword
               }
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-900 disabled:bg-slate-300 text-white font-medium text-sm rounded-xl transition shadow-xs"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-black disabled:bg-slate-300 text-white font-bold text-sm rounded-xl transition shadow-xs cursor-pointer"
             >
               {isUpdatingPassword ? (
                 <>
