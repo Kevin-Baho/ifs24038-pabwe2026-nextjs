@@ -92,7 +92,7 @@ export function ProfilePage() {
     <div className="space-y-6 pb-12">
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs flex flex-col sm:flex-row items-center gap-6">
         <div className="relative group">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center font-bold text-3xl shadow-md overflow-hidden">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-blue-700 to-indigo-600 text-white flex items-center justify-center font-bold text-3xl shadow-md overflow-hidden">
             {profile?.photo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -130,20 +130,20 @@ export function ProfilePage() {
 
         <div className="text-center sm:text-left flex-1">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-            <h2 className="text-xl font-bold text-slate-900">{displayName}</h2>
-            <span className="inline-block px-2.5 py-0.5 text-xs font-bold bg-blue-50 text-blue-800 rounded-full border border-blue-200">
+            <h1 className="text-xl font-bold text-slate-900">{displayName}</h1>
+            <span className="inline-block px-2.5 py-0.5 text-xs font-bold bg-blue-100 text-blue-900 rounded-full border border-blue-200">
               ifs24038
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-slate-700 font-medium">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-slate-800 font-semibold">
             <div className="flex items-center gap-1.5">
-              <IconMail size={16} className="text-slate-600" />
+              <IconMail size={16} className="text-slate-700" />
               <span>{displayEmail}</span>
             </div>
             {profile?.created_at && (
               <div className="flex items-center gap-1.5">
-                <IconCalendar size={16} className="text-slate-600" />
+                <IconCalendar size={16} className="text-slate-700" />
                 <span>Bergabung {formatDate(profile.created_at)}</span>
               </div>
             )}
@@ -155,7 +155,7 @@ export function ProfilePage() {
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
             <IconUser size={20} className="text-blue-700" />
-            <h3 className="font-bold text-slate-900">Perbarui Informasi</h3>
+            <h2 className="font-bold text-slate-900">Perbarui Informasi</h2>
           </div>
 
           <form onSubmit={handleUpdateName} className="space-y-4">
@@ -173,7 +173,7 @@ export function ProfilePage() {
                 value={name}
                 onChange={handleNameChange}
                 placeholder="Nama Lengkap"
-                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 transition"
+                className="w-full px-3.5 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm text-slate-900 font-medium transition"
               />
             </div>
 
@@ -189,7 +189,7 @@ export function ProfilePage() {
                 type="email"
                 readOnly
                 value={displayEmail}
-                className="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-700 font-medium text-sm outline-none cursor-not-allowed"
+                className="w-full px-3.5 py-2 bg-slate-100 border border-slate-300 rounded-xl text-slate-800 font-bold text-sm outline-none cursor-not-allowed"
               />
             </div>
 
@@ -216,7 +216,7 @@ export function ProfilePage() {
         <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
           <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
             <IconShieldLock size={20} className="text-blue-700" />
-            <h3 className="font-bold text-slate-900">Keamanan & Sandi</h3>
+            <h2 className="font-bold text-slate-900">Keamanan & Sandi</h2>
           </div>
 
           <form onSubmit={handleUpdatePassword} className="space-y-4">
