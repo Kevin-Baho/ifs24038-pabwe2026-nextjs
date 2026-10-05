@@ -22,10 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={plusJakartaSans.className}>
+      <body className={`${plusJakartaSans.className} bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col`}>
         <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
-
