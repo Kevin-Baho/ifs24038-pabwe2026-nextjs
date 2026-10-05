@@ -20,13 +20,20 @@ export function LoginPage() {
     if (!email || !password) return;
 
     setIsLoading(true);
+    
+    // Sesuaikan parameter dispatch sesuai dengan action asyncLogin milik Posts App (NextJS)
     const success = await dispatch(
       asyncLogin({ email, password }, () => {
         router.push("/");
       })
     );
+    
     setIsLoading(false);
-    return success;
+    
+    // Fallback jika tidak ada callback fungsi di dalam action
+    if (success === true) {
+      router.push("/");
+    }
   };
 
   return (
@@ -41,7 +48,7 @@ export function LoginPage() {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label
-            htmlFor="email"
+            htmlFor="login-email-input"
             className="block text-sm font-medium text-slate-700 mb-1"
           >
             Email
@@ -51,7 +58,8 @@ export function LoginPage() {
               <IconMail size={18} />
             </div>
             <input
-              id="email"
+              id="login-email-input"
+              name="email"
               type="email"
               required
               value={email}
@@ -64,7 +72,7 @@ export function LoginPage() {
 
         <div>
           <label
-            htmlFor="password"
+            htmlFor="login-password-input"
             className="block text-sm font-medium text-slate-700 mb-1"
           >
             Kata Sandi
@@ -74,7 +82,8 @@ export function LoginPage() {
               <IconLock size={18} />
             </div>
             <input
-              id="password"
+              id="login-password-input"
+              name="password"
               type="password"
               required
               value={password}
@@ -86,6 +95,7 @@ export function LoginPage() {
         </div>
 
         <button
+          id="login-submit-button"
           type="submit"
           disabled={isLoading || !email || !password}
           className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-medium py-2.5 px-4 rounded-lg transition duration-200 mt-2 shadow-md shadow-blue-500/20"
@@ -118,4 +128,3 @@ export function LoginPage() {
 }
 
 export default LoginPage;
-

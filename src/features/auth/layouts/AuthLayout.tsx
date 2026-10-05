@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/hooks/redux";
 import { getAccessToken } from "@/helpers/apiHelper";
@@ -11,14 +11,20 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children }: AuthLayoutProps) {
   const router = useRouter();
+  // Gunakan isAuth dan token sesuai dengan state Redux di aplikasi Posts Anda
   const { isAuth, token } = useAppSelector((state) => state.auth);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const activeToken = token || getAccessToken();
     if (isAuth || activeToken) {
       router.replace("/");
     }
   }, [isAuth, token, router]);
+
+  // Hindari render di server agar tidak ada konflik dan error 401
+  if (!mounted) return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-slate-100 p-4">
@@ -36,4 +42,3 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 }
 
 export default AuthLayout;
-
