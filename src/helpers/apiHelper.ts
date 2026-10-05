@@ -1,75 +1,84 @@
-import { DELCOM_BASEURL } from "@/lib/config";
-import { ApiResult } from "@/types";
+import { API_BASE_URL } from "@/lib/config";
 
-const TOKEN_KEY = "DELCOM_ACCESS_TOKEN";
+export class ApiError extends Error {
+  status: number;
 
-export function getAccessToken(): string | null {
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
+export const getToken = (): string | null => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem("token");
   }
   return null;
-}
+};
 
-export function putAccessToken(token: string | null): void {
+export const setToken = (token: string): void => {
   if (typeof window !== "undefined") {
-    if (token) {
-      localStorage.setItem(TOKEN_KEY, token);
-    } else {
-      localStorage.removeItem(TOKEN_KEY);
-    }
+    localStorage.setItem("token", token);
   }
-}
+};
 
-export async function _fetchWithAuth<T = unknown>(
+export const removeToken = (): void => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("token");
+  }
+};
+
+/**
+ * Respons API biasanya dibungkus { success, message, data: {...} }.
+ * Fungsi ini mengambil isi `data` bila ada, dan jika tidak ada mengembalikan respons apa adanya.
+ */
+export const unwrapData = <T>(res: unknown): T => {
+  if (res && typeof res === "object" && "data" in res) {
+    const inner = (res as { data?: unknown }).data;
+    if (inner !== undefined && inner !== null) return inner as T;
+  }
+  return res as T;
+};
+
+/** Mengambil entitas dari respons, mis. pickEntity(res, "post") untuk { data: { post } } atau { post }. */
+export const pickEntity = <T>(res: unknown, key: string): T => {
+  const data = unwrapData<Record<string, unknown>>(res);
+  if (data && typeof data === "object" && key in data) {
+    return data[key] as T;
+  }
+  return data as unknown as T;
+};
+
+export const fetchApi = async <T = unknown>(
   endpoint: string,
   options: RequestInit = {}
-): Promise<ApiResult<T>> {
-  const url = endpoint.startsWith("http")
-    ? endpoint
-    : `${DELCOM_BASEURL}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
+): Promise<T> => {
+  const token = getToken();
+  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
 
-  const token = getAccessToken();
-  const headers = new Headers(options.headers || {});
+  const headers: HeadersInit = {
+    ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(options.headers || {}),
+  };
 
-  if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
+
+  // Respons bisa kosong / bukan JSON (mis. 204 atau error gateway)
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new ApiError(
+      (data as { message?: string }).message || "Terjadi kesalahan pada server",
+      response.status
+    );
   }
 
-  const isFormData = options.body instanceof FormData;
-  if (!isFormData && !headers.has("Content-Type")) {
-    headers.set("Content-Type", "application/json");
-  }
+  return data as T;
+};
 
-  try {
-    const response = await fetch(url, {
-      ...options,
-      headers,
-    });
-
-    const responseJson = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      return {
-        success: false,
-        message:
-          responseJson.message ||
-          `Request failed with status ${response.status}`,
-        data: responseJson.data,
-      };
-    }
-
-    return {
-      success: responseJson.success ?? true,
-      message: responseJson.message || "Success",
-      data: responseJson.data ?? (responseJson as unknown as T),
-    };
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Network error occurred";
-    return {
-      success: false,
-      message: errorMessage,
-    };
-  }
-}
-
+export const apiFetch = fetchApi;

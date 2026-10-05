@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
-import "./globals.css";
+import { Inter } from "next/font/google";
 import Providers from "@/components/Providers";
+import "./globals.css"; // Gunakan path relative ./globals.css
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Delcom Post - Aplikasi Manajemen Postingan",
-  description:
-    "Aplikasi Manajemen Postingan Delcom dibangun oleh Risky Kevin Naibaho (ifs24038)",
+  title: "DelcomFeed - Praktikum PABWE 2026",
+  description: "Aplikasi Publikasi & Diskusi Mahasiswa",
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -22,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`${plusJakartaSans.className} bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col`}>
+      <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

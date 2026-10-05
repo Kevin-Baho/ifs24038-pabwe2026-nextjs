@@ -1,12 +1,10 @@
-# dependencies
-/node_modules
-
-# next.js
-/.next/
-/out/
-
-# testing
-/coverage
-
-# environment files
+node_modules
+.next
+out
+build
+coverage
 .env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store

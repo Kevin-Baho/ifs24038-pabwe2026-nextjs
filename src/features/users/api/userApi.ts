@@ -1,56 +1,20 @@
-import { _fetchWithAuth } from "@/helpers/apiHelper";
-import {
-  ApiResult,
-  ChangePasswordPayload,
-  UpdateProfilePayload,
-  User,
-} from "@/types";
+import { fetchApi } from "@/helpers/apiHelper";
 
-export interface UsersResponse {
-  users: User[];
-}
+export const getUserProfile = async (): Promise<unknown> => fetchApi("/users/me");
 
-export interface UserMeResponse {
-  user: User;
-}
+export const getUsers = async (): Promise<unknown> => fetchApi("/users");
 
-export const userApi = {
-  async getUsers(): Promise<ApiResult<UsersResponse>> {
-    return _fetchWithAuth<UsersResponse>("/users", {
-      method: "GET",
-    });
-  },
+export const updateProfile = async (payload: { name: string; bio: string }): Promise<unknown> =>
+  fetchApi("/users/me", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
 
-  async getMe(): Promise<ApiResult<UserMeResponse>> {
-    return _fetchWithAuth<UserMeResponse>("/users/me", {
-      method: "GET",
-    });
-  },
-
-  async updateMe(
-    payload: UpdateProfilePayload
-  ): Promise<ApiResult<UserMeResponse>> {
-    return _fetchWithAuth<UserMeResponse>("/users/me", {
-      method: "PUT",
-      body: JSON.stringify(payload),
-    });
-  },
-
-  async updatePhoto(photoFile: File): Promise<ApiResult<UserMeResponse>> {
-    const formData = new FormData();
-    formData.append("photo", photoFile);
-
-    return _fetchWithAuth<UserMeResponse>("/users/me/photo", {
-      method: "POST",
-      body: formData,
-    });
-  },
-
-  async updatePassword(payload: ChangePasswordPayload): Promise<ApiResult> {
-    return _fetchWithAuth("/users/me/password", {
-      method: "PUT",
-      body: JSON.stringify(payload),
-    });
-  },
-};
-
+export const updatePassword = async (payload: {
+  old_password: string;
+  new_password: string;
+}): Promise<unknown> =>
+  fetchApi("/users/password", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });

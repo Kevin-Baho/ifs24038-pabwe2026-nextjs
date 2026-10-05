@@ -1,35 +1,20 @@
-import { _fetchWithAuth } from "@/helpers/apiHelper";
-import {
-  ApiResult,
-  LoginPayload,
-  RegisterPayload,
-  User,
-} from "@/types";
-
-export interface LoginResponse {
-  token: string;
-  user: User;
-}
-
-export interface RegisterResponse {
-  user: User;
-}
+import { fetchApi } from "@/helpers/apiHelper";
 
 export const authApi = {
-  async login(payload: LoginPayload): Promise<ApiResult<LoginResponse>> {
-    return _fetchWithAuth<LoginResponse>("/auth/login", {
+  login: (credentials: Record<string, string>) =>
+    fetchApi("/auth/login", {
       method: "POST",
-      body: JSON.stringify(payload),
-    });
-  },
+      body: JSON.stringify(credentials),
+    }),
 
-  async register(
-    payload: RegisterPayload
-  ): Promise<ApiResult<RegisterResponse>> {
-    return _fetchWithAuth<RegisterResponse>("/auth/register", {
+  register: (payload: Record<string, string>) =>
+    fetchApi("/auth/register", {
       method: "POST",
       body: JSON.stringify(payload),
-    });
-  },
+    }),
+
+  getMe: () => fetchApi("/users/me"),
+
+  /** Cadangan bila backend menyediakan endpoint /auth/me */
+  getMeLegacy: () => fetchApi("/auth/me"),
 };
-

@@ -1,79 +1,49 @@
 export interface User {
-  id: string;
+  id: string | number;
   name: string;
   email: string;
+  bio?: string | null;
+  avatar?: string;
   photo?: string | null;
   created_at?: string;
-  updated_at?: string;
-}
-
-export interface PostAuthor {
-  id: string;
-  name: string;
-  email?: string;
-  photo?: string | null;
-}
-
-export interface PostComment {
-  id: string;
-  post_id?: string;
-  user_id?: string;
-  author?: PostAuthor;
-  user?: PostAuthor;
-  comment: string;
-  created_at: string;
-  updated_at?: string;
 }
 
 export interface Post {
-  id: string;
-  user_id: string;
-  author: PostAuthor;
-  description: string;
-  cover?: string | null;
-  total_likes: number;
-  is_liked: boolean;
-  total_comments: number;
-  comments?: PostComment[];
+  id: string | number;
+  title: string;
+  content: string;
+  cover?: string;
+  user_id: string | number;
   created_at: string;
   updated_at?: string;
+  user?: User;
 }
 
-export interface ApiResult<T = unknown> {
+export interface ApiResponse<T> {
   success: boolean;
   message: string;
-  data?: T;
+  data: T;
 }
 
-export interface LoginPayload {
-  email: string;
-  password: string;
+export interface AuthState {
+  user: User | null;
+  token: string | null;
+  /** true setelah token dibaca dari localStorage di sisi klien (mencegah hydration mismatch) */
+  initialized: boolean;
+  isLoading: boolean;
+  error: string | null;
 }
 
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
+export interface PostState {
+  posts: Post[];
+  selectedPost: Post | null;
+  isLoading: boolean;
+  error: string | null;
 }
 
-export interface UpdateProfilePayload {
-  name: string;
+export interface UserState {
+  users: User[];
+  selectedUser: User | null;
+  isLoading: boolean;
+  error: string | null;
 }
-
-export interface ChangePasswordPayload {
-  old_password?: string;
-  password?: string;
-  new_password?: string;
-  confirm_password?: string;
-}
-
-export interface CreatePostPayload {
-  description: string;
-  cover?: File;
-}
-
-export interface UpdatePostPayload {
-  id: string;
-  description: string;
-}
-
