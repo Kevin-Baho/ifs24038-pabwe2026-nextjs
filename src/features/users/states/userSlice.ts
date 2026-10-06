@@ -1,11 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { setToken, removeToken } from "@/helpers/apiHelper";
 
 export interface User {
   id: number;
   name: string;
   email: string;
-  bio?: string | null; // Ditambahkan di sini
+  bio?: string | null;
   email_verified_at?: string | null;
   photo?: string;
   created_at?: string;

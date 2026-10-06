@@ -18,12 +18,12 @@ export default function ChangeCoverModal({ isOpen, onClose, postId, onSuccess }:
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!coverUrl) return;
+    if (!coverUrl.trim()) return;
 
     setLoading(true);
     setError(null);
     try {
-      await postApi.updateCover(postId, coverUrl);
+      await postApi.updateCover(postId, coverUrl.trim());
       onSuccess();
       onClose();
     } catch (err: unknown) {
@@ -43,7 +43,9 @@ export default function ChangeCoverModal({ isOpen, onClose, postId, onSuccess }:
           </div>
         )}
         <div>
-          <label htmlFor="cover-url" className="block text-sm font-medium text-slate-300 mb-1">URL Gambar</label>
+          <label htmlFor="cover-url" className="block text-sm font-medium text-slate-300 mb-1">
+            URL Gambar
+          </label>
           <input
             id="cover-url"
             type="url"
@@ -58,7 +60,7 @@ export default function ChangeCoverModal({ isOpen, onClose, postId, onSuccess }:
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-slate-400 hover:text-slate-200 text-sm font-medium"
+            className="px-4 py-2 rounded-xl text-slate-400 hover:text-slate-200 text-sm font-medium transition"
           >
             Batal
           </button>

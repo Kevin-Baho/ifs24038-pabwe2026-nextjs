@@ -20,22 +20,22 @@ export default function LoginPage() {
     setErrorMessage(null);
     setLoading(true);
 
-    const result = await dispatch(
-      loginUser({
-        username: identifier.trim(),
-        email: identifier.trim(),
-        password,
-        kata_sandi: password,
-      })
-    );
-    setLoading(false);
-
-    if (loginUser.fulfilled.match(result)) {
+    try {
+      await dispatch(
+        loginUser({
+          username: identifier.trim(),
+          email: identifier.trim(),
+          password,
+          kata_sandi: password,
+        })
+      ).unwrap();
       router.replace("/");
-    } else {
+    } catch (err: unknown) {
       setErrorMessage(
-        (result.payload as string) || "Gagal melakukan login. Periksa kembali kredensial Anda."
+        (err as string) || "Gagal melakukan login. Periksa kembali kredensial Anda."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
