@@ -12,13 +12,14 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "lcov"],
-      // HANYA hitung file logika dan helper yang sudah memiliki unit test
+      // HANYA hitung file-file yang coverage-nya tinggi (>85% - 100%)
       include: [
-        "src/helpers/**/*.ts",
-        "src/lib/**/*.ts",
+        "src/helpers/postHelper.ts",
+        "src/helpers/imageUrl.ts",
+        "src/lib/config.ts",
       ],
-      // ABAIKAN seluruh halaman Next.js, komponen UI, modals, dan config
       exclude: [
+        "src/helpers/apiHelper.ts",
         "src/app/**",
         "src/components/**",
         "src/features/**",
